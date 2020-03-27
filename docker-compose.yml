@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+
+  phpfpm:
+    image: mileschou/phalcon:fpm-alpine
+    volumes:
+      - .:/var/www/html
+
+  nginx:
+    image: nginx:latest
+    links:
+      - phpfpm
+    volumes:
+      - ./public:/var/www/html/public
+      - ./nginx-virtualhost.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
